@@ -9,12 +9,12 @@ import java.io.StringReader;
 import java.util.HashSet;
 
 import com.cmsz.Analyse;
-import com.cmsz.AnalyseSample;
+import com.cmsz.AnalyzeWuhang;
 
 public class Check {
 	
 	private static final String rootPath = "usecases";
-	private static final Analyse myAnalyse = new AnalyseSample();
+	private static final Analyse myAnalyse = new AnalyzeWuhang();
 	
 	public static void main(String[] args) {
 		// 1. 执行日志分析
@@ -93,6 +93,7 @@ public class Check {
 			String examLine = examBr.readLine();
 			if (!("SUCCESS:").equals(examLine)) {
 				System.err.println("result文件错误，首行不是SUCCESS:");
+				examBr.close();
 				return;
 			}
 			while (!(examLine = examBr.readLine()).equals("FAIL:")) {
@@ -108,19 +109,19 @@ public class Check {
 			examBr.close();
 			
 			// 对比集合
-			System.err.println("--------------------开始匹配合法序列-----------------------");
+			System.err.println("--------------------开始匹配SUCCESS序列-----------------------");
 			if (successSet.equals(examSucSet)) {
-				System.err.println("合法序列匹配成功");
+				System.err.println("SUCCESS序列匹配成功");
 			} else {
-				System.err.println("合法序列匹配失败：");
+				System.err.println("SUCCESS序列匹配失败：");
 				Utils.compareSet(examSucSet, successSet);
 			}
 			
-			System.err.println("--------------------开始匹配不合法序列-----------------------");
+			System.err.println("--------------------开始匹配FAIL序列-----------------------");
 			if (failSet.equals(examFailSet)) {
-				System.err.println("不合法序列匹配成功");
+				System.err.println("FAIL序列匹配成功");
 			} else {
-				System.err.println("不合法序列匹配失败：" );
+				System.err.println("FAIL序列匹配失败：" );
 				Utils.compareSet(examFailSet, failSet);
 			}
 		} catch (IOException e) {
