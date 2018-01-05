@@ -1,0 +1,6 @@
+以下规则从redis中提取，下面的redis的命令
+
+127.0.0.1:6379> smembers TenMilion[0-9]+.csv
+1) "line['OrderNo'].substring(0,4) == line['reqSys']"
+2) "T(Integer).valueOf(line['OrderMoney']) == T(Integer).valueOf(line['Payment']) + T(Integer).valueOf(line['Gift'])"
+3) "line['reqSys'] == '0075'"
